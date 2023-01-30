@@ -36,7 +36,7 @@ class FoodService {
         NotificationCenter.default.post(name: NSNotification.Name("food.service.filteredFoods"), object: filteredFoods)
     }
     
-    func createFood(name: String, calories: Double, fats: Double, sugars: Double, fiber: Double, carbs: Double, proteins: Double, unit: String, factor: Double, image: Data) {
+    func createFood(name: String, calories: Double, fats: Double, sugars: Double, fiber: Double, carbs: Double, proteins: Double, unit: String, factor: Double, image: Data?) {
         
         if let food = self.foodStorage.createFood(name: name, calories: calories, fats: fats, sugars: sugars, fiber: fiber, carbs: carbs, proteins: proteins, unit: unit, factor: factor, image: image) {
             
@@ -52,15 +52,15 @@ class FoodService {
         
     }
     
-    func selectFood(byIndex index: Int) {
+    func selectFood(byIndex index: Int, inFoods foods: [FoodEntity]) {
         
-        guard index >= 0 && index < self.foods.count else {
+        guard index >= 0 && index < foods.count else {
             
             NotificationCenter.default.post(name: NSNotification.Name("food.service.selectedFoodError"), object: FoodServiceError.selectFood(reason: "index out of bounds for FoodService.foods"))
             return
         }
             
-            self.selectedFood = self.foods[index]
+            self.selectedFood = foods[index]
             
         NotificationCenter.default.post(name: NSNotification.Name("food.service.selectedFood"), object: self.selectedFood)
         

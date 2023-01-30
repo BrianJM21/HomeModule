@@ -25,6 +25,8 @@ class HomeViewController: UIViewController {
         self.foodCollection.register(UINib(nibName: "HomeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CollectionFoodCell")
         
         self.foodCollection.dataSource = self
+        self.foodCollection.delegate = self
+        self.searchTextField.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -33,23 +35,11 @@ class HomeViewController: UIViewController {
         
     }
     
-    @IBAction func searchAction(_ sender: Any) {
-        
-        if let keyword = self.searchTextField.text {
-            
-            guard !keyword.isEmpty else { return }
-            self.presenter?.searchFoods(byKeyword: keyword)
-        }
-    }
-    
-    
     @IBAction func addButtonAction(_ sender: Any) {
-        
+                
         self.presenter?.goToAdd()
     }
     
-    
-
 }
 
 extension HomeViewController: HomeViewDelegate {
@@ -101,6 +91,18 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        self.selectedFood = self.foods[indexPath.row]
+        self.presenter?.selectFood(byIndex: indexPath.row, inFoods: foods)
+    }
+}
+
+extension HomeViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+
+        if let keyword = self.searchTextField.text {
+            
+            self.presenter?.searchFoods(byKeyword: keyword)
+        }
+        return true
     }
 }

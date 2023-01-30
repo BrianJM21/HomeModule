@@ -15,18 +15,15 @@ extension HomeModuleRouter {
         
         if let viewController = presenter.view as? AddViewController {
             
-            self.navigationController.pushViewController(viewController, animated: true)
-            
+            self.navigationController.present(viewController, animated: true)
         }
         
     }
     
     func closeAdd(presenter: AddPresenter) {
         
-        self.navigationController.popViewController(animated: true)
-        
+        self.navigationController.dismiss(animated: true)
         presenter.removeView()
-        
     }
     
 }

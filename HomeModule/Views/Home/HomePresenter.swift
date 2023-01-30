@@ -48,6 +48,8 @@ class HomePresenter: NSObject {
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.filteredFoodsObserver), name: NSNotification.Name("food.service.filteredFoods"), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(self.selectedFoodObserver), name: NSNotification.Name("food.service.selectedFood"), object: nil)
+        
         self.view?.viewDidCreate()
         
     }
@@ -70,6 +72,14 @@ class HomePresenter: NSObject {
             
         }
         
+    }
+    
+    @objc func selectedFoodObserver(notification: Notification) {
+        
+        if let selectedFood = notification.object as? FoodEntity {
+            
+            self.view?.foods(selectedFood: selectedFood)
+        }
     }
     
     func removeView() {
@@ -96,9 +106,14 @@ class HomePresenter: NSObject {
         self.interactor.searchFoods(keyword)
     }
     
+    func selectFood(byIndex: Int, inFoods: [FoodEntity]) {
+        
+        self.interactor.selectFood(byIndex: byIndex, inFoods: inFoods)
+    }
+    
     func goToAdd() {
         
-        NotificationCenter.default.post(name: NSNotification.Name("todoScene.goToAdd"), object: self)
+        NotificationCenter.default.post(name: NSNotification.Name("homeModuleScene.goToAdd"), object: self)
         
     }
     

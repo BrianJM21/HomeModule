@@ -49,7 +49,7 @@ class FoodStorage {
     
     // CRUD Operations
     
-    func createFood(name: String, calories: Double, fats: Double, sugars: Double, fiber: Double, carbs: Double, proteins: Double, unit: String, factor: Double, image: Data) -> FoodEntity? {
+    func createFood(name: String, calories: Double, fats: Double, sugars: Double, fiber: Double, carbs: Double, proteins: Double, unit: String, factor: Double, image: Data?) -> FoodEntity? {
         
         let food = FoodEntity(context: self.context)
         
@@ -82,20 +82,25 @@ class FoodStorage {
         
     }
     
-//    TODO: TRAER FRUTAS POR BÚSQUEDA
     
     func getFoods(_ keyword: String) -> [FoodEntity] {
         
         if let foods = try? self.context.fetch(FoodEntity.fetchRequest()) {
             
-            return foods
+            guard !keyword.isEmpty else { return foods }
             
+            let filteredFoods = foods.filter({ $0.name!.lowercased().contains(keyword.lowercased()) })
+
+            return filteredFoods
+
         } else {
-            
+
             return []
-            
+
         }
+
     }
+    
     
 }
 

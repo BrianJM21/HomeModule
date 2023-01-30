@@ -28,7 +28,7 @@ class FoodInteractor {
         self.service.searchFoods(keyword)
     }
     
-    func createFood(name: String, calories: Double, fats: Double, sugars: Double, fiber: Double, carbs: Double, proteins: Double, unit: String, factor: Double, image: Data) {
+    func createFood(name: String, calories: Double, fats: Double, sugars: Double, fiber: Double, carbs: Double, proteins: Double, unit: String, factor: Double, image: Data?) {
         
         guard !name.isEmpty, !calories.isLess(than: 0.0), !fats.isLess(than: 0.0), !sugars.isLess(than: 0.0), !fiber.isLess(than: 0.0), !carbs.isLess(than: 0.0), !proteins.isLess(than: 0.0), !unit.isEmpty, !factor.isLess(than: 0.0) else {
             
@@ -42,9 +42,9 @@ class FoodInteractor {
         
     }
     
-    func selectFood(byIndex index: Int) {
+    func selectFood(byIndex: Int, inFoods: [FoodEntity]) {
         
-        self.service.selectFood(byIndex: index)
+        self.service.selectFood(byIndex: byIndex, inFoods: inFoods)
     }
     
 }

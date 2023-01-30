@@ -72,7 +72,7 @@ class AddPresenter: NSObject {
         
     }
     
-    func createFood(name: String, calories: Double, fats: Double, sugars: Double, fiber: Double, carbs: Double, proteins: Double, unit: String, factor: Double, image: Data) {
+    func createFood(name: String, calories: Double, fats: Double, sugars: Double, fiber: Double, carbs: Double, proteins: Double, unit: String, factor: Double, image: Data?) {
         
         self.interactor.createFood(name: name, calories: calories, fats: fats, sugars: sugars, fiber: fiber, carbs: carbs, proteins: proteins, unit: unit, factor: factor, image: image)
         
